@@ -134,26 +134,26 @@ The second stage: reordering a prefetched candidate set for precision at the top
 
 Evaluation resources treated as objects of study rather than as numbers to quote. What separates them is **where relevance comes from** -- expert assessors, the papers' own authors, rhetorical facets, LLM annotation validated against experts, the citation structure itself, or counterfactual edits that hold relevance fixed -- which is the same question that separates the task sections above.
 
-Each subsection opens with a table of the **datasets** it covers, followed by the papers. A benchmark often bundles several datasets built and scored differently, and several method papers ship a dataset of their own (ScholarQABench in OpenScholar, LitQA2 in PaperQA2, RealScholarQuery in PaSa), so the tables list datasets rather than papers. The **Gold** column says who decided the correct answers and what form they take. Benchmarks graded on a reference answer or rubric score the final answer and its citations, not a ranked list, so their numbers do not compare with recall on a test collection. [BENCHMARKS.md](BENCHMARKS.md) gives one row per dataset or subtask, with query source, gold source and form, and, where the paper reports them, date cutoffs and a headline result.
+Each subsection opens with a table of the **datasets** it covers, followed by the papers. A benchmark often bundles several datasets built and scored differently, and several method papers ship a dataset of their own (ScholarQABench in OpenScholar, LitQA2 in PaperQA2, RealScholarQuery in PaSa), so the tables list datasets rather than papers. The **Gold** column says who decided the correct answers and what form they take. Benchmarks graded on a reference answer or rubric score the final answer and its citations, not a ranked list, so their numbers do not compare with recall on a test collection. [BENCHMARKS.md](BENCHMARKS.md) gives one row per dataset or subtask, with query source, gold source and form, metrics, and, where the paper reports them, date cutoffs and a headline result.
 
 ### Agent Benchmarks
 
-| Dataset | Domain | Task | Size | Corpus | Gold | Metrics |
-|---|---|---|---|---|---|---|
-| ScholarQA-CS ([OpenScholar](https://doi.org/10.1038/s41586-025-10072-4)) | CS | question → long-form answer with citations | 100 | 45M open-access papers, as passages | expert-written rubric | rubric score, citation F1 |
-| ScholarQA-Bio / -Neuro (OpenScholar) | Biomedicine / neuroscience | same | 1,451 / 1,308 | same | none: questions only | citation F1 |
-| ScholarQA-Multi (OpenScholar) | CS, physics, biomedicine | same | 108 | same | expert-written answer | citation F1, LLM and expert ratings |
-| SciFact / PubMedQA / QASA (OpenScholar) | Biomedicine / biomedicine / CS | claim → true or false; question → yes or no; question → answer | 208 / 843 / 1,375 | same | existing labels; reference answer | accuracy; ROUGE-L; citation F1 |
-| LitQA2 ([PaperQA2](https://arxiv.org/abs/2409.13740)) | Biology | multiple-choice question → answer and source paper | 248 | live search, full text | expert-written; one source paper | accuracy, precision |
-| RealScholarQuery ([PaSa](https://doi.org/10.18653/v1/2025.acl-long.572)) | AI | research query → set of papers | 50 | live Google search over arXiv | annotators over pooled results | Recall@20 / 50 |
-| AutoScholarQuery (PaSa) | AI | research query → set of papers | 1,000 (33,551 train) | live Google search over arXiv | papers cited in a related-work passage | Recall@20 / 50 |
-| SPARBench ([SPAR](https://arxiv.org/abs/2507.15245)) | CS, biomedicine | research query → set of papers | 50 | live, each system's own sources | LLM pre-filter, then annotators | precision, recall, F1 |
-| PaperFindingBench ([AstaBench](https://arxiv.org/abs/2510.21652)) | CS | query → ranked papers | 267 | Asta corpus, cutoff 2025-06 | exact answers (navigational, metadata); LLM judge (semantic) | F1; recall–nDCG mean |
-| LitQA2-FullText-Search (AstaBench) | Biology | question → papers including the target | 75 | Asta corpus, cutoff 2024-10 | LitQA2 source paper | Recall@30 |
-| ScholarQA-CS2 (AstaBench) | CS | question → long-form report with citations | 100 | Asta corpus, cutoff 2025-05 | LLM judge on four facets | mean facet score |
-| SciNet ego / pair / path ([SciNet](https://proceedings.mlr.press/v306/shao26h.html)) | 7 disciplines | topic → novel or disruptive papers; paper → positive citers or co-mentions; two papers → citation path | 2,640 / 4,200 / 2,100 | OpenAlex, 269M papers | scientometric indicators; citation network with LLM sentiment; BFS path checked by experts | Recall@50; citation and co-mention accuracy; path overlap |
-| AutoResearchBench Deep / Wide ([AutoResearchBench](https://arxiv.org/abs/2604.25256)) | CS | constraints → one paper or none; conditions → every matching paper | 600 / 400 | arXiv via DeepXiv search | LLM-assisted, human-verified | accuracy; IoU |
-| SAGE short-form / open-ended ([SAGE](https://arxiv.org/abs/2602.05975)) | CS, natural science, healthcare, humanities | question → its source paper; open question → answer with references | 600 / 600 | four corpora of ~50K papers | seed paper; graded by citation structure | exact match; weighted recall |
+| Dataset | Domain | Task | Size | Corpus | Gold |
+|---|---|---|---|---|---|
+| ScholarQA-CS ([OpenScholar](https://doi.org/10.1038/s41586-025-10072-4)) | CS | question → long-form answer with citations | 100 | 45M open-access papers, as passages | expert-written rubric |
+| ScholarQA-Bio / -Neuro (OpenScholar) | Biomedicine / neuroscience | same | 1,451 / 1,308 | same | none: questions only |
+| ScholarQA-Multi (OpenScholar) | CS, physics, biomedicine | same | 108 | same | expert-written answer |
+| SciFact / PubMedQA / QASA (OpenScholar) | Biomedicine / biomedicine / CS | claim → true or false; question → yes or no; question → answer | 208 / 843 / 1,375 | same | existing labels; reference answer |
+| LitQA2 ([PaperQA2](https://arxiv.org/abs/2409.13740)) | Biology | multiple-choice question → answer and source paper | 248 | live search, full text | expert-written; one source paper |
+| RealScholarQuery ([PaSa](https://doi.org/10.18653/v1/2025.acl-long.572)) | AI | research query → set of papers | 50 | live Google search over arXiv | annotators over pooled results |
+| AutoScholarQuery (PaSa) | AI | research query → set of papers | 1,000 (33,551 train) | live Google search over arXiv | papers cited in a related-work passage |
+| SPARBench ([SPAR](https://arxiv.org/abs/2507.15245)) | CS, biomedicine | research query → set of papers | 50 | live, each system's own sources | LLM pre-filter, then annotators |
+| PaperFindingBench ([AstaBench](https://arxiv.org/abs/2510.21652)) | CS | query → ranked papers | 267 | Asta corpus, cutoff 2025-06 | exact answers (navigational, metadata); LLM judge (semantic) |
+| LitQA2-FullText-Search (AstaBench) | Biology | question → papers including the target | 75 | Asta corpus, cutoff 2024-10 | LitQA2 source paper |
+| ScholarQA-CS2 (AstaBench) | CS | question → long-form report with citations | 100 | Asta corpus, cutoff 2025-05 | LLM judge on four facets |
+| SciNet ego / pair / path ([SciNet](https://proceedings.mlr.press/v306/shao26h.html)) | 7 disciplines | topic → novel or disruptive papers; paper → positive citers or co-mentions; two papers → citation path | 2,640 / 4,200 / 2,100 | OpenAlex, 269M papers | scientometric indicators; citation network with LLM sentiment; BFS path checked by experts |
+| AutoResearchBench Deep / Wide ([AutoResearchBench](https://arxiv.org/abs/2604.25256)) | CS | constraints → one paper or none; conditions → every matching paper | 600 / 400 | arXiv via DeepXiv search | LLM-assisted, human-verified |
+| SAGE short-form / open-ended ([SAGE](https://arxiv.org/abs/2602.05975)) | CS, natural science, healthcare, humanities | question → its source paper; open question → answer with references | 600 / 600 | four corpora of ~50K papers | seed paper; graded by citation structure |
 
 - <details style="display:inline"><summary><b>(<i>ICML'26</i>) SciNet: Evaluating AI Agents in Relation-Aware Scientific Literature Retrieval</b> [<a href="https://proceedings.mlr.press/v306/shao26h.html">link</a>]</summary> 8,940 tasks over a 269M-paper meta-database across seven disciplines that test whether retrieval agents understand how papers relate -- retrieving papers with novel knowledge structures, identifying the relation between a pair, reconstructing a line of scientific evolution; agent accuracy is often below 20%.</details>
 - <details style="display:inline"><summary><b>(<i>ICLR'26</i>) AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite</b> [<a href="https://arxiv.org/abs/2510.21652">link</a>]</summary> 2,400+ problems spanning the research process, literature search and synthesis among them, many drawn from real requests to deployed Asta agents, run in a reproducible environment with production-grade search tools and cost-aware scoring; 57 agents evaluated.</details>
@@ -162,16 +162,16 @@ Each subsection opens with a table of the **datasets** it covers, followed by th
 
 ### Literature Search Test Collections
 
-| Dataset | Domain | Task | Size | Corpus | Gold | Metrics |
-|---|---|---|---|---|---|---|
-| [MAPLE](https://arxiv.org/abs/2608.15624) | ML, NLP | aspect query → target paper | 2,095 | 73,973 papers, full text | the target paper | per-aspect and all-aspect recall |
-| [SciToT](https://arxiv.org/abs/2611.05829) | 5 domains | half-remembered description, including figures → the paper | 11,499 | 108,512 papers, text and figures | the source paper | MRR@10, Recall@k |
-| [BRIGHT](https://openreview.net/forum?id=ykuc5q381b) | StackExchange, coding, math | reasoning-heavy query → helpful documents | 1,384 over 12 datasets | 8K–414K documents per dataset | pages linked in top answers, kept by unanimous annotator agreement | nDCG@10 |
-| [LitSearch](https://doi.org/10.18653/v1/2024.emnlp-main.840) | ML, NLP | question → the paper it asks about | 597 (351 from citations, 246 by authors) | 64,183 papers | the cited paper; the author's own paper | Recall@5 / 20 |
-| [DORIS-MAE](https://proceedings.neurips.cc/paper_files/paper/2023/hash/78f9c04bdcb06f1ada3902912d8b64ba-Abstract-Datasets_and_Benchmarks.html) | CS | multi-aspect query → abstracts | 100 | 360,000 abstracts | LLM-graded per aspect, validated by experts | R@k, NDCG, MAP |
-| [CSFCube](https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/20f07591c6fcb220ffe637cda29bb3f6-Abstract-round2.html) | CS | paper + facet → similar papers | 50 | ~800K papers, pooled candidates | experts, graded 0–3 | NDCG, R-Precision |
-| [TREC-COVID](https://doi.org/10.1145/3451964.3451965) | Biomedicine | COVID-19 topic → articles | 50 | CORD-19, 171K articles | experts over pooled runs, 3 levels | NDCG@10, Bpref |
-| [TripClick](https://doi.org/10.1145/3404835.3463242) | Health | search query → clicked articles | 3,525 test (685,649 train) | 1.5M MEDLINE abstracts | user clicks | MRR, NDCG@10 |
+| Dataset | Domain | Task | Size | Corpus | Gold |
+|---|---|---|---|---|---|
+| [MAPLE](https://arxiv.org/abs/2608.15624) | ML, NLP | aspect query → target paper | 2,095 | 73,973 papers, full text | the target paper |
+| [SciToT](https://arxiv.org/abs/2611.05829) | 5 domains | half-remembered description, including figures → the paper | 11,499 | 108,512 papers, text and figures | the source paper |
+| [BRIGHT](https://openreview.net/forum?id=ykuc5q381b) | StackExchange, coding, math | reasoning-heavy query → helpful documents | 1,384 over 12 datasets | 8K–414K documents per dataset | pages linked in top answers, kept by unanimous annotator agreement |
+| [LitSearch](https://doi.org/10.18653/v1/2024.emnlp-main.840) | ML, NLP | question → the paper it asks about | 597 (351 from citations, 246 by authors) | 64,183 papers | the cited paper; the author's own paper |
+| [DORIS-MAE](https://proceedings.neurips.cc/paper_files/paper/2023/hash/78f9c04bdcb06f1ada3902912d8b64ba-Abstract-Datasets_and_Benchmarks.html) | CS | multi-aspect query → abstracts | 100 | 360,000 abstracts | LLM-graded per aspect, validated by experts |
+| [CSFCube](https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/20f07591c6fcb220ffe637cda29bb3f6-Abstract-round2.html) | CS | paper + facet → similar papers | 50 | ~800K papers, pooled candidates | experts, graded 0–3 |
+| [TREC-COVID](https://doi.org/10.1145/3451964.3451965) | Biomedicine | COVID-19 topic → articles | 50 | CORD-19, 171K articles | experts over pooled runs, 3 levels |
+| [TripClick](https://doi.org/10.1145/3404835.3463242) | Health | search query → clicked articles | 3,525 test (685,649 train) | 1.5M MEDLINE abstracts | user clicks |
 
 - <details style="display:inline"><summary><b>(<i>arXiv'26</i>) Can Retrievers Find the Same Paper from Different Aspects? A Multi-Aspect Full-Paper Scientific Retrieval Benchmark</b> [<a href="https://arxiv.org/abs/2608.15624">link</a>]</summary> MAPLE, 2,095 expert-validated queries about recent ML and NLP papers, each aimed at a paper's motivation, method or findings, testing whether a retriever recovers the same paper from every aspect rather than scoring query-paper pairs in isolation.</details>
 - <details style="display:inline"><summary><b>(<i>arXiv'26</i>) SciToT: Multimodal Tip-of-the-Tongue Retrieval for Scientific Papers</b> [<a href="https://arxiv.org/abs/2611.05829">link</a>]</summary> Re-finding a half-remembered paper: 11,499 LLM-generated queries that mimic partial recollections, including memories of figures and plots, over 108K open-access papers in five domains, with the cues modelled on real re-finding requests.</details>
@@ -183,15 +183,15 @@ Each subsection opens with a table of the **datasets** it covers, followed by th
 
 ### Inspiration & Ideation Retrieval
 
-| Dataset | Domain | Task | Size | Corpus | Gold | Metrics |
-|---|---|---|---|---|---|---|
-| [ResearchBench](https://aclanthology.org/2026.findings-acl.644/) inspiration retrieval | 12 disciplines | question + background → its inspirations among 75 candidates | 1,386 | 75 candidates per paper | LLM-extracted, checked by experts | hit ratio |
-| [ScholarCatalyst](https://arxiv.org/abs/2610.02202) CoreQ / SubQ | CS | project's research question → catalyst papers | 207 / 687 | 190,896 papers before the project | the source paper's own authors | Recall@k, nDCG@20 |
-| [MUSES](https://arxiv.org/abs/2609.00313) Bibliography / Context-Root / Author-Root | All fields; mostly life sciences | researcher's history → works their next paper builds on | 134,314 / 6,659 / 580 | 2.33M papers (2.60M for Author-Root) | citations; contexts classified as generative; authors' own survey answers | Hit@100, Recall@K |
-| [Inspire](https://arxiv.org/abs/2609.33233) | CS | solution-redacted problem → antecedent papers | 476 | live arXiv search, date-gated | LLM ensemble, graded | nDCG@10 |
-| [RATIO](https://arxiv.org/abs/2608.27394) Address / Broaden / Specify | CS | sentence → sentence linked by an ideation move | 9,668 / 584 / 7,327 | 404,371 sentences | discourse markers, filtered by an LLM judge | Recall@k, MRR@10 |
-| [PreScience](https://arxiv.org/abs/2602.20459) prior-work selection | AI | author team + history → the prior work of their next paper | 52,836 targets (500 for agents) | papers before the target | the target's influential references | nDCG, R-precision |
-| MIR-MultiCite ([MIR](https://doi.org/10.18653/v1/2025.acl-long.1390)) | Computational linguistics | research proposal → papers whose method inspired it | 139 | cited papers in the test set, or in all splits | MultiCite intent labels | Recall@3, mAP |
+| Dataset | Domain | Task | Size | Corpus | Gold |
+|---|---|---|---|---|---|
+| [ResearchBench](https://aclanthology.org/2026.findings-acl.644/) inspiration retrieval | 12 disciplines | question + background → its inspirations among 75 candidates | 1,386 | 75 candidates per paper | LLM-extracted, checked by experts |
+| [ScholarCatalyst](https://arxiv.org/abs/2610.02202) CoreQ / SubQ | CS | project's research question → catalyst papers | 207 / 687 | 190,896 papers before the project | the source paper's own authors |
+| [MUSES](https://arxiv.org/abs/2609.00313) Bibliography / Context-Root / Author-Root | All fields; mostly life sciences | researcher's history → works their next paper builds on | 134,314 / 6,659 / 580 | 2.33M papers (2.60M for Author-Root) | citations; contexts classified as generative; authors' own survey answers |
+| [Inspire](https://arxiv.org/abs/2609.33233) | CS | solution-redacted problem → antecedent papers | 476 | live arXiv search, date-gated | LLM ensemble, graded |
+| [RATIO](https://arxiv.org/abs/2608.27394) Address / Broaden / Specify | CS | sentence → sentence linked by an ideation move | 9,668 / 584 / 7,327 | 404,371 sentences | discourse markers, filtered by an LLM judge |
+| [PreScience](https://arxiv.org/abs/2602.20459) prior-work selection | AI | author team + history → the prior work of their next paper | 52,836 targets (500 for agents) | papers before the target | the target's influential references |
+| MIR-MultiCite ([MIR](https://doi.org/10.18653/v1/2025.acl-long.1390)) | Computational linguistics | research proposal → papers whose method inspired it | 139 | cited papers in the test set, or in all splits | MultiCite intent labels |
 
 - <details style="display:inline"><summary><b>(<i>ACL Findings'26</i>) ResearchBench: Benchmarking LLMs in Scientific Discovery via Inspiration-Based Task Decomposition</b> [<a href="https://aclanthology.org/2026.findings-acl.644/">link</a>]</summary> Splits hypothesis discovery into inspiration retrieval, hypothesis composition and hypothesis ranking, built by an LLM extraction pipeline from 1,386 papers across 12 disciplines published from 2024 on; in inspiration retrieval, models pick the papers that inspired a study from candidates that include crafted hard negatives, and GPT-4o places a ground-truth inspiration in its top 4% of candidates 45.65% of the time.</details>
 - <details style="display:inline"><summary><b>(<i>arXiv'26</i>) ScholarCatalyst: A Benchmark for Retrieving Papers That Inspire New Research</b> [<a href="https://arxiv.org/abs/2610.02202">link</a>]</summary> Asks whether a system can find the prior papers that did or could have advanced a project while it was still taking shape: 894 queries from 207 recent CS papers, searched from the project's initial research question over a 191K-paper corpus cut off before the project began, with relevance judged by the papers' own lead authors; agentic search does no better than the embedding retriever it calls (0.42 vs. 0.48 Recall@20).</details>
@@ -202,20 +202,20 @@ Each subsection opens with a table of the **datasets** it covers, followed by th
 
 ### Citation Recommendation & Attribution
 
-| Dataset | Domain | Task | Size | Corpus | Gold | Metrics |
-|---|---|---|---|---|---|---|
-| [CiteRAG](https://doi.org/10.1145/3774904.3792075) list / position | CS | title + abstract → reference list; placeholder → cited paper | 7,267 / 8,541 | 554,719 papers at three text depths | citations | Recall, NDCG; PACA@k, hallucination rate |
-| [MasterSet](https://arxiv.org/abs/2604.17680) | AI/ML | title + abstract → must-cite references | 7,028 | 67,761 papers | LLM-labelled tiers validated by researchers; mention counts | Recall@50 / 100 |
-| SciFullBench References / Citations ([Chain of Retrieval](https://arxiv.org/abs/2507.10057)) | ML, CL | full paper → papers it cites; papers citing it | 1,600 / 1,600 | 40,782 full-text papers | citations | Recall@K |
-| CitationR ([Recommending Missed Citations](https://doi.org/10.63317/33uudfoux4nm)) | ML | submission → citations reviewers said were missing | 2,074 | ~55K candidates | reviewers | MAP, MRR, NDCG |
-| GoldRiM / SilverRiM ([AchGNN](https://doi.org/10.1145/3805712.3809531)) | Mathematics | seed paper → related papers with aspect | 80 / 212,382 seeds | zbMATH Open | one expert reviewer; zbMATH reviews | P@10, R@10, MRR |
-| [CiteME](https://doi.org/10.52202/079017-0252) | ML | excerpt → the one paper it cites | 130 | open | expert-curated citation | accuracy |
-| [LCRC](https://arxiv.org/abs/2610.15832) | Astrophysics, earth and planetary science | citing sentence → cited papers | 14,735 | 52,618 full-text papers | citations | Recall@k, NDCG@k |
-| ArSyTa ([SymTax](https://doi.org/10.18653/v1/2024.findings-acl.533)) | CS | citation context → cited paper | 124,189 test | 474,341 papers | citations | Recall@k, MRR |
-| arXiv (HAtten) ([Gu et al.](https://doi.org/10.1007/978-3-030-99736-6_19)) | arXiv | citation context → cited paper | 104,401 test | 1.66M papers | citations | Recall@k, MRR |
-| FullTextPeerRead ([Jeong et al.](https://doi.org/10.1007/s11192-020-03561-y)) | ML, NLP | citation context → cited paper | 17,247 contexts | 4,898 papers | citations | MAP, Recall@k |
-| ACL-200 / RefSeer ([Medić & Šnajder](https://doi.org/10.18653/v1/2020.sdp-1.11)) | NLP / CS | citation context → cited paper | 9,585 / 126,593 test | 19,776 / 624,957 papers | citations | Recall@10, MRR |
-| [Authority Bias](https://doi.org/10.18653/2026.emnlp-main.1069) | CS | query + 10 candidates → recommendations | 250 | 10 candidates with perturbed metadata | none: counterfactual, content held fixed | shift toward high-authority papers |
+| Dataset | Domain | Task | Size | Corpus | Gold |
+|---|---|---|---|---|---|
+| [CiteRAG](https://doi.org/10.1145/3774904.3792075) list / position | CS | title + abstract → reference list; placeholder → cited paper | 7,267 / 8,541 | 554,719 papers at three text depths | citations |
+| [MasterSet](https://arxiv.org/abs/2604.17680) | AI/ML | title + abstract → must-cite references | 7,028 | 67,761 papers | LLM-labelled tiers validated by researchers; mention counts |
+| SciFullBench References / Citations ([Chain of Retrieval](https://arxiv.org/abs/2507.10057)) | ML, CL | full paper → papers it cites; papers citing it | 1,600 / 1,600 | 40,782 full-text papers | citations |
+| CitationR ([Recommending Missed Citations](https://doi.org/10.63317/33uudfoux4nm)) | ML | submission → citations reviewers said were missing | 2,074 | ~55K candidates | reviewers |
+| GoldRiM / SilverRiM ([AchGNN](https://doi.org/10.1145/3805712.3809531)) | Mathematics | seed paper → related papers with aspect | 80 / 212,382 seeds | zbMATH Open | one expert reviewer; zbMATH reviews |
+| [CiteME](https://doi.org/10.52202/079017-0252) | ML | excerpt → the one paper it cites | 130 | open | expert-curated citation |
+| [LCRC](https://arxiv.org/abs/2610.15832) | Astrophysics, earth and planetary science | citing sentence → cited papers | 14,735 | 52,618 full-text papers | citations |
+| ArSyTa ([SymTax](https://doi.org/10.18653/v1/2024.findings-acl.533)) | CS | citation context → cited paper | 124,189 test | 474,341 papers | citations |
+| arXiv (HAtten) ([Gu et al.](https://doi.org/10.1007/978-3-030-99736-6_19)) | arXiv | citation context → cited paper | 104,401 test | 1.66M papers | citations |
+| FullTextPeerRead ([Jeong et al.](https://doi.org/10.1007/s11192-020-03561-y)) | ML, NLP | citation context → cited paper | 17,247 contexts | 4,898 papers | citations |
+| ACL-200 / RefSeer ([Medić & Šnajder](https://doi.org/10.18653/v1/2020.sdp-1.11)) | NLP / CS | citation context → cited paper | 9,585 / 126,593 test | 19,776 / 624,957 papers | citations |
+| [Authority Bias](https://doi.org/10.18653/2026.emnlp-main.1069) | CS | query + 10 candidates → recommendations | 250 | 10 candidates with perturbed metadata | none: counterfactual, content held fixed |
 
 - <details style="display:inline"><summary><b>(<i>EMNLP'26</i>) Authority Bias in Conversational Search Engines for Academic Paper Recommendation</b> [<a href="https://doi.org/10.18653/2026.emnlp-main.1069">link</a>]</summary> Holds each paper's title and abstract fixed while flipping or boosting its author prestige, venue and citation count, showing that eight LLMs recommending papers favour authority over content, and that debiasing prompts suppress mentions of authority faster than they change the choices.</details>
 - <details style="display:inline"><summary><b>(<i>WWW'26</i>) What Should I Cite? A RAG Benchmark for Academic Citation Prediction</b> [<a href="https://doi.org/10.1145/3774904.3792075">link</a>]</summary> CiteRAG poses both citation tasks over one 554k-paper corpus indexed at three levels of text (abstract, introduction, full text): list-level prediction of a paper's whole reference list from its title and abstract (global), and position-level prediction of the paper cited at each placeholder from its surrounding context (local); evaluates RAG pipelines on retrieval accuracy, hallucination and diversity, and releases a toolkit.</details>
@@ -224,15 +224,15 @@ Each subsection opens with a table of the **datasets** it covers, followed by th
 
 ### Representations, Reranking & Claim Verification
 
-| Dataset | Domain | Task | Size | Corpus | Gold | Metrics |
-|---|---|---|---|---|---|---|
-| [SciFact](https://doi.org/10.18653/v1/2020.emnlp-main.609) | Biomedicine | claim → supporting or refuting abstracts and rationales | 300 test | 5,183 abstracts | experts | F1 |
-| [SciFact-Open](https://doi.org/10.18653/v1/2022.findings-emnlp.347) | Biomedicine | claim → supporting or refuting abstracts | 279 | 500K abstracts | experts over pooled system predictions | F1 |
-| [CoBiT](https://doi.org/10.18653/2026.emnlp-main.44) | Science | claim and counterclaim → evidence and answer | 707 pairs | each system's own retriever | none: counterfactual pairs | bias per pipeline stage |
-| [SciRerankBench](https://doi.org/10.18653/2026.emnlp-main.2613) | 5 sciences | question + adversarial contexts → reranked contexts → answer | 5.5K | OpenAlex abstracts | generated with the question | Recall@k, answer quality |
-| [SciRepEval](https://doi.org/10.18653/v1/2023.emnlp-main.338) | Many | 24 tasks: classification, regression, proximity, search | varies | varies | clicks, citations, experts, labels | F1, MAP, nDCG, τ |
-| SciDocs ([SPECTER](https://doi.org/10.18653/v1/2020.acl-main.207)) | Many | paper → cited, co-cited, co-viewed or co-read papers; classification; recommendation | 1K query papers per ranking task | 30 candidates per query | citations, user sessions, clicks | MAP, nDCG, F1 |
-| [LIMIT](https://openreview.net/forum?id=k9CzIvzfaA) | Synthetic | attribute query → the two matching documents | 1,000 | 50K documents | by construction | Recall@k |
+| Dataset | Domain | Task | Size | Corpus | Gold |
+|---|---|---|---|---|---|
+| [SciFact](https://doi.org/10.18653/v1/2020.emnlp-main.609) | Biomedicine | claim → supporting or refuting abstracts and rationales | 300 test | 5,183 abstracts | experts |
+| [SciFact-Open](https://doi.org/10.18653/v1/2022.findings-emnlp.347) | Biomedicine | claim → supporting or refuting abstracts | 279 | 500K abstracts | experts over pooled system predictions |
+| [CoBiT](https://doi.org/10.18653/2026.emnlp-main.44) | Science | claim and counterclaim → evidence and answer | 707 pairs | each system's own retriever | none: counterfactual pairs |
+| [SciRerankBench](https://doi.org/10.18653/2026.emnlp-main.2613) | 5 sciences | question + adversarial contexts → reranked contexts → answer | 5.5K | OpenAlex abstracts | generated with the question |
+| [SciRepEval](https://doi.org/10.18653/v1/2023.emnlp-main.338) | Many | 24 tasks: classification, regression, proximity, search | varies | varies | clicks, citations, experts, labels |
+| SciDocs ([SPECTER](https://doi.org/10.18653/v1/2020.acl-main.207)) | Many | paper → cited, co-cited, co-viewed or co-read papers; classification; recommendation | 1K query papers per ranking task | 30 candidates per query | citations, user sessions, clicks |
+| [LIMIT](https://openreview.net/forum?id=k9CzIvzfaA) | Synthetic | attribute query → the two matching documents | 1,000 | 50K documents | by construction |
 
 - <details style="display:inline"><summary><b>(<i>EMNLP'26</i>) Retrieving Facts or Reinforcing Beliefs? Towards Understanding Confirmation Bias in RAG Systems for Scientific Claim Verification</b> [<a href="https://doi.org/10.18653/2026.emnlp-main.44">link</a>]</summary> CoBiT, 707 minimally perturbed claim-counterclaim pairs for measuring confirmation bias in scientific RAG stage by stage; across OpenScholar, ScholarQA and LLM baselines, bias arises at different stages and is amplified by reranking and generation.</details>
 - <details style="display:inline"><summary><b>(<i>EMNLP'26</i>) SciRerankBench: Benchmarking Rerankers Towards Scientific Retrieval-Augmented Generation with LLMs</b> [<a href="https://doi.org/10.18653/2026.emnlp-main.2613">link</a>]</summary> Evaluates 13 rerankers inside RAG pipelines across five scientific subjects using three kinds of adversarial context -- noisy, semantically similar but logically irrelevant, and counterfactual -- to isolate the reranker's contribution to the final answer.</details>
